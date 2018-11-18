@@ -93,7 +93,7 @@ var myGameArea = {
         this.canvas.height = 550;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-	this.interval = setInterval(updateGameArea, 20);
+	var i = setInterval(updateGameArea, 20);
     },
 	clear: function(){
 		this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
@@ -306,30 +306,30 @@ function spawnProjectilesSet(arr, start, end) {
 function createProjectiles() {
 	deltaTheta = 11.25 * Math.PI / 180;
 	for(var i = 0; i < 10; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, 'green', -1000, -1000, fanPattern());		
+		projectileArr[i] = new projectileComponent(20, 20,"bosscarrot.png", -1000, -1000, fanPattern(), "image");		
 	}
 	
 	theta = 0;
     	for(var i = 10; i < 20; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, 'green', -1000, -1000, fanPattern());	
+		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");	
    	}
 
 	deltaTheta = Math.PI / 10;
 	theta = 0;
 	for(var i = 20; i < 25; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, 'green', -1000, -1000, fanPattern());
+		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
 	}
 
 	theta = Math.PI / 9;
 	deltaTheta = Math.PI / 15;
 	for(var i = 25; i < 30; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, 'green', -1000, -1000, fanPattern());
+		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
 	}
 
 	deltaTheta = Math.PI / 20;
 	theta = 0;
 	for(var i = 30; i < 40; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, 'green', -1000, -1000, fanPattern());		
+		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");		
 	}
 }
 
@@ -349,22 +349,37 @@ function createProjectiles() {
 	}
 }
 */
-function projectileComponent(width, height, color, x, y, dir) {
+function projectileComponent(width, height, color, x, y, dir, type) {
 	this.width = width;
 	this.height = height;  
 	this.x = x;
 	this.y = y;
-	this.update = function() {
-   		ctx = myGameArea.context;
-    		ctx.fillStyle = color;
-   		ctx.fillRect(this.x, this.y, this.width, this.height);
-		
-	}
+	
 	this.newPos = function() {
 		this.x = 600;
 		this.y = 225;
 	}
 	this.dir = dir;
+	this.type = type;
+	if(type == "image"){
+		this.image= new Image();
+		this.image.src = color;
+	}
+  
+	this.update = function(){
+   	 ctx = myGameArea.context;
+	
+	if (type == "image"){
+		ctx.drawImage(this.image, 
+				this.x,
+				this.y,
+				this.width, this.height);
+	}
+	else{
+    	ctx.fillStyle = color;
+   	 ctx.fillRect(this.x, this.y, this.width, this.height);
+	}
+	}
 	
 }
 
@@ -572,6 +587,7 @@ function projectileHit(object) {
 	
 	if(health <= 0) {
 		//alert('dead');
+		//clearInterval(i);
 	}
 }
 
