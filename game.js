@@ -7,6 +7,7 @@ var keys= [];
 //var background;
 var projectileSpeed = 5;
 var projectileArr = [100];
+var carrotSize = 50;
 
 //window.addEventListener('keydown', moving);
 //window.addEventListener('keyup', moving);
@@ -34,7 +35,8 @@ function counter(){
 	if(count>5){
 	count =0;
 	}
-	switch(count){
+	if(myGamePiece.y >=400){
+		switch(count){
 	case 0: 
 		
 		myGamePiece.image.src = "b0001.png";
@@ -58,22 +60,14 @@ function counter(){
 	case 5: 
 		myGamePiece.image.src = "b0006.png";
 		break;
-}
-}
-/*function counterbg(){
-	console.log("counterbg is " + countbg);
-	countbg++;
-	if(countbg>19){
-	countbg =0;
-	}
-	if (countbg <10){
-		background.image.src = "bg000" + (countbg +1) + ".png";
+		}
 	}
 	else{
-		background.image.src = "bg00" + (countbg +1) + ".png";
+	myGamePiece.image.src = "b0007.png";
 	}
+	
 }
-*/	
+
 
 function startGame() {
 	myGameArea.start();
@@ -82,7 +76,7 @@ function startGame() {
 	myGamePiece = new component(140, 110, "b0001.png", 100, 100, "image");
 	//animate(myGamePiece);
 	projectile = new component (60, 60, "bosscarrot.png", 1100, 70, "image");
-	//playershot = new component(40, 40, "carrot.png", -50, myGampiece.x, "image");
+	playershot = new projectileComponent(40, 40, "carrot.png", -50, myGamePiece.y, fanPattern(), "image");
 	createProjectiles();
 }
 
@@ -169,45 +163,7 @@ function component(width, height, color, x, y, type) {
 	}
 }
 
-/*switch(count){
-	case 0: 
-		myGamePiece.image.src = "b0001.png";
-		break;
-	case 1: 
-		myGamePiece.image.src = "b0002.png";
-		break;
-	case 2: 
-		myGamePiece.image.src = "b0003.png";
-		break;
-	case 3:
-		 myGamePiece.image.src = "b0004.png";
-		break;
-	case 4: 
-		myGamePiece.image.src = "b0005.png";
-		break;
-	case 5: 
-		myGamePiece.image.src = "b0006.png";
-		break;
-}*/
-/*if(count == 0){
-	myGamePiece.image.src = "b0001.png";
-}
-else if(count == 1){
-	myGamePiece.image.src = "b0002.png";
-}
-else if(count ==2){
-	myGamePiece.image.src = "b0003.png";
-}
-else if (count ==3){
-	myGamePiece.image.src = "b0004.png";
-}
-else if (count ==4) {
-	myGamePiece.image.src = "b0005.png";
-}
-else if (count == 5) {
-	myGamePiece.image.src = "b0006.png";
-}
-*/
+
 
 var counter = 0;
 
@@ -229,6 +185,7 @@ if(counter > 550) {
 	//myGamePiece.newPos();
 	//boss.update();
 	myGamePiece.update();
+	playershot.update();
 	//projectile.update();
 	
 	
@@ -306,49 +263,34 @@ function spawnProjectilesSet(arr, start, end) {
 function createProjectiles() {
 	deltaTheta = 11.25 * Math.PI / 180;
 	for(var i = 0; i < 10; i++) {
-		projectileArr[i] = new projectileComponent(20, 20,"bosscarrot.png", -1000, -1000, fanPattern(), "image");		
+		projectileArr[i] = new projectileComponent(carrotSize, carrotSize,"bosscarrot.png", -1000, -1000, fanPattern(), "image");		
 	}
 	
 	theta = 0;
     	for(var i = 10; i < 20; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");	
+		projectileArr[i] = new projectileComponent(carrotSize, carrotSize, "bosscarrot.png", -1000, -1000, fanPattern(), "image");	
    	}
 
 	deltaTheta = Math.PI / 10;
 	theta = 0;
 	for(var i = 20; i < 25; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
+		projectileArr[i] = new projectileComponent(carrotSize, carrotSize, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
 	}
 
 	theta = Math.PI / 9;
 	deltaTheta = Math.PI / 15;
 	for(var i = 25; i < 30; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
+		projectileArr[i] = new projectileComponent(carrotSize, carrotSize, "bosscarrot.png", -1000, -1000, fanPattern(), "image");
 	}
 
 	deltaTheta = Math.PI / 20;
 	theta = 0;
 	for(var i = 30; i < 40; i++) {
-		projectileArr[i] = new projectileComponent(20, 20, "bosscarrot.png", -1000, -1000, fanPattern(), "image");		
+		projectileArr[i] = new projectileComponent(carrotSize, carrotSize, "bosscarrot.png", -1000, -1000, fanPattern(), "image");		
 	}
 }
 
-/*function component(width, height, color, x, y) {
-  	this.width = width;
-	this.height = height;  
-	this.x = x;
-	this.y = y;
-	this.update = function() {
-   		ctx = myGameArea.context;
-    		ctx.fillStyle = color;
-   		ctx.fillRect(this.x, this.y, this.width, this.height);
-	}
-	this.newPos = function() {
-		this.x = 600;
-		this.y = 225;
-	}
-}
-*/
+
 function projectileComponent(width, height, color, x, y, dir, type) {
 	this.width = width;
 	this.height = height;  
@@ -447,27 +389,6 @@ function moveRight(){
 	}
 }
 	
-/*function jump(){
-	console.log("this be happening");
-	var jump = 10;
-	this.interval = clearInterval(updateGameArea);
-	if(myGamePiece.y >= 460){
-		myGamePiece.y -=jump;
-		jump -=1;
-	}
-	this.interval = setInterval(updateGameArea, 20);	
-
-}*/
-
-
-
-
-/*if(count%2==0){
-	myGamePiece.image.src = "1bun.png";
-}
-else{
-	myGamePiece.image.src = "3mmos.gif";	
-}*/
 
 
 var g = 0;
@@ -478,7 +399,8 @@ function gravity() {
 	if(myGamePiece.y < 400) {
 		
 		if(400 - g < myGamePiece.y) {
-					myGamePiece.y = 400;
+	
+		myGamePiece.y = 400;
 			
 		g = 1;
 		
@@ -534,6 +456,8 @@ function fall() {
 }
 
 
+
+
 function checkKeys(){
 	
 	if (keys[37]){
@@ -552,7 +476,7 @@ function checkKeys(){
 	}
 	if (keys[38]){
 	
-	myGamePiece.image.src = "b0007.png";
+	
 	hop();
 	
 	
@@ -564,6 +488,11 @@ function checkKeys(){
 	
 	}
 	if(keys[32]){
+		playershot.x = myGamePiece.x + 70;
+		playershot.y= myGamePiece.y + 55;	
+		if (playershot.x < 800){
+		playershot.x+= 5;
+		}
 	}
 		
 	
@@ -576,10 +505,10 @@ function moveProjectile(object) {
 }
 
 function projectileHit(object) {
-	if(myGamePiece.x < (object.x + object.width - 35) && 
-	   myGamePiece.x + myGamePiece.width - 35 > object.x &&
-	   myGamePiece.y < (object.y + object.height - 35) &&
-	   myGamePiece.y + myGamePiece.height - 35 > object.y) {
+	if(myGamePiece.x < (object.x + object.width - 65) && 
+	   myGamePiece.x + myGamePiece.width - 35 > object.x && //front legs
+	   myGamePiece.y < (object.y + object.height - 65) &&
+	   myGamePiece.y + myGamePiece.height - 65 > object.y) {
 		health -= 34;
 		object.x = -1000;
 		object.y = -1000;
