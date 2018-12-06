@@ -2,7 +2,7 @@ var myGamePiece;
 var boss;
 var health = 100;
 var projectile;
-var playershot;
+var playershot = new projectileComponent(carrotSize, carrotSize, "carrot.png", -1000, -1000, [0, 0], 'image'); 
 var keys= [];
 //var background;
 var projectileSpeed = 5;
@@ -490,9 +490,7 @@ function checkKeys(){
 	if(keys[32]){
 		playershot.x = myGamePiece.x + 70;
 		playershot.y= myGamePiece.y + 55;	
-		if (playershot.x < 800){
-		playershot.x+= 5;
-		}
+		shotDirection();
 	}
 		
 	
@@ -531,4 +529,9 @@ function fanPattern() {
 	return dir;
 } 
 
+function shotDirection()
+{
+	var direction = [1, 0];
+	playershot.dir = direction;
+}
 
